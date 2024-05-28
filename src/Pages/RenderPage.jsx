@@ -1,16 +1,11 @@
-import "./RenderPage.css";
-import CounterCard from "../Components/CounterCard";
+import React from "react";
+import { Chart as ChartJS, defaults } from "chart.js/auto";
+import { Bar, Doughnut, line } from "react-chartjs-2";
+
+import "./App.css";
 
 function RenderPage() {
-  return (
-    <>
-      <h1>Vite + React</h1>
-      <CounterCard />
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  return <></>;
 }
 
 export default RenderPage;
