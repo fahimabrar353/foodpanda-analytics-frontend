@@ -4,6 +4,12 @@ import { Bar, Doughnut, Line } from "react-chartjs-2";
 import axios from "axios";
 
 import "./App.css";
+import {
+  MonthlySpendingsChart,
+  OrderedFromRestaurantChart,
+  OrderedItemsByDateChart,
+  OrderedItemsChart,
+} from "./Components/charts";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -112,134 +118,13 @@ function App() {
 
   return (
     <div className="App">
-      <div className="dataCard largeCard">
-        <Line
-          data={{
-            labels: orderData.map((data) => formatDate(data.order_time)),
-            datasets: [
-              {
-                label: "Sub Total",
-                data: orderData.map((data) => data.subtotal),
-                backgroundColor: "#064FF0",
-                borderColor: "#064FF0",
-              },
-              {
-                label: "Total Value",
-                data: orderData.map((data) => data.total_value),
-                backgroundColor: "#FF3030",
-                borderColor: "#FF3030",
-              },
-            ],
-          }}
-          options={{
-            elements: {
-              line: {
-                tension: 0.5,
-              },
-            },
-            plugins: {
-              title: {
-                text: "Monthly spendings",
-              },
-            },
-          }}
-        />
-      </div>
-
-      <div className="dataCard largeCard">
-        <Bar
-          data={{
-            labels: labels,
-            datasets: [
-              {
-                label: "Total Value",
-                data: data,
-                backgroundColor: "rgb(136, 191, 77)",
-                borderColor: "rgb(136, 191, 77)",
-              },
-            ],
-          }}
-          options={{
-            elements: {
-              line: {
-                tension: 0.5,
-              },
-            },
-            plugins: {
-              title: {
-                text: "Ordered items by date",
-              },
-            },
-          }}
-        />
-      </div>
-
-      <div className="dataCard orderCard">
-        <Bar
-          data={{
-            labels: orderData.map((data) => data.restaurant.restaurant_name),
-            datasets: [
-              {
-                label: "Price",
-                data: orderData.map((data) => data.subtotal),
-                backgroundColor: [
-                  "rgba(43, 63, 229, 0.8)",
-                  "rgba(250, 192, 19, 0.8)",
-                  "rgba(253, 135, 135, 0.8)",
-                ],
-                borderRadius: 5,
-              },
-            ],
-          }}
-          options={{
-            plugins: {
-              title: {
-                text: "Ordered items",
-              },
-            },
-          }}
-        />
-      </div>
-
-      <div className="dataCard categoryCard">
-        <Doughnut
-          data={{
-            labels: doughnutLabels,
-            datasets: [
-              {
-                label: "Order Count",
-                data: doughnutData,
-                backgroundColor: [
-                  "rgba(43, 63, 229, 0.8)",
-                  "rgba(250, 192, 19, 0.8)",
-                  "rgba(253, 135, 135, 0.8)",
-                  "rgba(100, 200, 255, 0.8)",
-                  "rgba(255, 200, 100, 0.8)",
-                  "rgba(150, 100, 255, 0.8)",
-                ],
-                borderColor: [
-                  "rgba(43, 63, 229, 0.8)",
-                  "rgba(250, 192, 19, 0.8)",
-                  "rgba(253, 135, 135, 0.8)",
-                  "rgba(100, 200, 255, 0.8)",
-                  "rgba(255, 200, 100, 0.8)",
-                  "rgba(150, 100, 255, 0.8)",
-                ],
-              },
-            ],
-          }}
-          options={{
-            plugins: {
-              title: {
-                text: "Ordered from Restaurant",
-              },
-              legend: {
-                display: false,
-              },
-            },
-          }}
-        />
-      </div>
+      <MonthlySpendingsChart orderData={orderData} />
+      <OrderedItemsByDateChart labels={labels} data={data} />
+      <OrderedItemsChart orderData={orderData} />
+      <OrderedFromRestaurantChart
+        doughnutLabels={doughnutLabels}
+        doughnutData={doughnutData}
+      />
     </div>
   );
 }
