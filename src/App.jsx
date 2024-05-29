@@ -73,10 +73,12 @@ function App() {
   //================================================================================================
 
   const generateDataset = () => {
+    if (!orderData.length) return { labels: [], data: [] };
+
     const labels = [];
     const data = [];
 
-    // Create an object to map order dates to their aggregated total values
+    // Create an object to map order dates to sum total_values
     const orderMap = orderData.reduce((acc, curr) => {
       const date = formatDate(curr.order_time);
       if (acc[date]) {
