@@ -70,6 +70,46 @@ function App() {
   const doughnutLabels = Object.keys(orderCounts);
   const doughnutData = Object.values(orderCounts);
 
+  //================================================================================================
+
+  const generateDataset = () => {
+    if (!orderData.length) return { labels: [], data: [] };
+
+    const labels = [];
+    const data = [];
+
+    // Create an object to map order dates to sum total_values
+    const orderMap = orderData.reduce((acc, curr) => {
+      const date = formatDate(curr.order_time);
+      if (acc[date]) {
+        acc[date] += curr.total_value;
+      } else {
+        acc[date] = curr.total_value;
+      }
+      return acc;
+    }, {});
+
+    // Iterate over a range of dates to cover all possible dates
+    const startDate = new Date(orderData[0].order_time);
+    const endDate = new Date(orderData[orderData.length - 1].order_time);
+
+    for (
+      let date = new Date(startDate);
+      date <= endDate;
+      date.setDate(date.getDate() + 1)
+    ) {
+      const formattedDate = formatDate(date);
+      labels.push(formattedDate);
+      data.push(orderMap[formattedDate] || null); // Push null if data is not available for that date
+    }
+
+    return { labels, data };
+  };
+
+  const { labels, data } = generateDataset();
+
+  //================================================================================================
+
   return (
     <div className="App">
       <div className="dataCard largeCard">
@@ -109,11 +149,11 @@ function App() {
       <div className="dataCard largeCard">
         <Bar
           data={{
-            labels: orderData.map((data) => formatDate(data.order_time)),
+            labels: labels,
             datasets: [
               {
                 label: "Total Value",
-                data: orderData.map((data) => data.total_value),
+                data: data,
                 backgroundColor: "rgb(136, 191, 77)",
                 borderColor: "rgb(136, 191, 77)",
               },
@@ -127,7 +167,7 @@ function App() {
             },
             plugins: {
               title: {
-                text: "Monthly spendings",
+                text: "Ordered items by date",
               },
             },
           }}
