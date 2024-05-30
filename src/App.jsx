@@ -115,31 +115,10 @@ function App() {
   };
 
   //================================================================================================
-  const generateHeatmapData = () => {
-    const dateCountMap = orderData.reduce((acc, order) => {
-      const formattedDate = formatDateForHeatMap(order.order_time);
-
-      if (!acc[formattedDate]) {
-        acc[formattedDate] = 0;
-      }
-
-      acc[formattedDate]++;
-
-      return acc;
-    }, {});
-
-    return Object.entries(dateCountMap).map(([date, count]) => ({
-      date,
-
-      count,
-    }));
-  };
 
   const orderCounts = getOrderCounts();
   const doughnutLabels = Object.keys(orderCounts);
   const doughnutData = Object.values(orderCounts);
-
-  const heatmapData = generateHeatmapData();
 
   //================================================================================================
 
@@ -178,6 +157,14 @@ function App() {
   };
 
   const { labels, data } = generateDataset();
+
+  //make combined object for heatmap from label and data
+  const heatmapData = labels.map((label, index) => {
+    return {
+      date: formatDateForHeatMap(label),
+      amount: data[index] || 0,
+    };
+  });
 
   //================================================================================================
 
