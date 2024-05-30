@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Chart as ChartJS, defaults } from "chart.js/auto";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { defaults } from "chart.js/auto";
 import axios from "axios";
-
-import CalendarHeatmap from "react-calendar-heatmap";
-import "react-calendar-heatmap/dist/styles.css";
-import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import "./App.css";
 import {
