@@ -175,7 +175,7 @@ function App() {
           <Heatmap heatmapData={heatmapData} />
 
           <OrderedItemsByDateChart labels={labels} data={data} />
-          <OrderedItemsChart orderData={orderData} />
+          {/* <OrderedItemsChart orderData={orderData} /> */}
           <OrderedFromRestaurantChart
             doughnutLabels={doughnutLabels}
             doughnutData={doughnutData}
